@@ -25,23 +25,30 @@ void BFS(int** arr, const int num_vertex, int vertex) {
 
     int start = 0, end = 0;
 
-    visited[vertex - 1] = 1; 
     queue[end++] = vertex;
 
-    while (start != end) {
-        
-        int node = queue[start] - 1;
-        visited[node] = 1;
-        start++;
+    for (int i = 0; i < num_vertex; i++) {
 
-        for (int j = 0; j < num_vertex; j++) {
-            if ((arr[node][j] == 1) && (visited[j] == 0)) {
-                queue[end++] = j + 1;
-                visited[j] = 1;
-            }
+        if ((visited[i] == 0) && (queue[start] != vertex)) {
+            queue[end++] = i + 1;
         }
 
-        std::cout << node + 1 << " ";
+        while (start != end) {
+
+            int node = queue[start] - 1;
+            visited[node] = 1;
+            start++;
+
+            for (int j = 0; j < num_vertex; j++) {
+                if ((arr[node][j] == 1) && (visited[j] == 0)) {
+                    queue[end++] = j + 1;
+                    visited[j] = 1;
+                }
+            }
+
+            std::cout << node + 1 << " ";
+        }
+
     }
 
     delete[] visited;
@@ -74,7 +81,7 @@ int main(int argc, char** argv)
             std::cin >> start_vertex;
         } while ((start_vertex > num_vertex) || (start_vertex <= 0));
 
-        
+
         std::cout << "Порядок обхода вершин: ";
 
         BFS(adj_matrix, num_vertex, start_vertex);
